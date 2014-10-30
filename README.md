@@ -1,7 +1,7 @@
 Headlines
 ========
 
-This is a basic Python program that prints 20minutos.es (Spanish newspaper) headlines. Besides it also uses a very simple sentiment analysis of those headlines for measuring the general mood of the news.
+This is a basic Python program that prints newspaper headlines. Besides it also uses a very simple sentiment analysis of those headlines for measuring the general mood of the news.
 
 ## Requirements
 
@@ -9,7 +9,7 @@ This is a basic Python program that prints 20minutos.es (Spanish newspaper) head
 
 ## Usage
 
-There are two basic ways of using *headlines*:
+Basic ways of using *headlines*:
 
 #### Sentiment analysis only (default)
 
@@ -17,18 +17,27 @@ There are two basic ways of using *headlines*:
 python headlines.py
 ```
 
-#### Sentiment analysis and headlines
+#### Sentiment analysis, headlines and newspaper (by name or id)
 
 ```
-python headlines.py -n <num_headlines>
+python headlines.py -n <num_headlines> -p <newspaper>
 ```
+
+Based on a list with info about different newspapers, it is possible to check the news choosing it.
+
+Supported now:
+
+| Newspaper      | Simple name     |    ID# |
+| -------------- | --------------- | :----: |
+| El Mundo       | elmundo         |      0 |
+| 20 Minutos     | 20minutos       |      1 |
 
 ## Example
 
-This command will output the sentiment analysis and the first 10 headlines in this moment:
+This command will output the sentiment analysis and the first 10 headlines of '20 Minutos':
 
 ```
-python headlines.py -n 20
+python headlines.py -n 10 -p 20minutos
 ```
 
 Output:
