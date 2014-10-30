@@ -2,6 +2,7 @@ import urllib2
 import re
 from Filter import Filter
 from Headline import Headline
+from Newspaper import Newspaper
 import sys, getopt
 
 def is_number(s):
@@ -11,24 +12,33 @@ def is_number(s):
     except ValueError:
         return False
 
+def choose_newspaper(newspaper):
+    return Newspaper(newspaper)
+
 def main(argv):
 
-    nheads = 0
+    nheads  = 0
+    news_id = 0
 
     try:
-        opts, args = getopt.getopt(argv,"n:",["num="])
+        opts, args = getopt.getopt(argv,"n:p:",["num-headlines=", "newspaper="])
     except getopt.GetoptError:
-        print('usage: headlines.py -n <numheads>')
+        print('usage: headlines.py -n <num_headlines> -p <newspaper>')
         sys.exit(2)
 
     for opt, arg in opts:
-        if opt in ("-n", "--num"):
+        if opt in ("-n", "--num-headlines"):
             nheads = arg
-    
-    response = urllib2.urlopen("http://www.20minutos.es")
+        elif opt in ("-p", "--newspaper"):
+            news_id = arg
+        else:
+            print('usage: headlines.py -n <num_headlines> -p <newspaper>')
+            sys.exit(2)
+
+    news = choose_newspaper(news_id)
+    response = urllib2.urlopen(news.url)
     page_source = response.read()
-    pattern = '<a.*?class="title".*?>(.*?)</a>'
-    headlines = re.findall(pattern, page_source)
+    headlines = re.findall(news.pattern, page_source, re.DOTALL)
     
     heads = []
     for title in headlines:
